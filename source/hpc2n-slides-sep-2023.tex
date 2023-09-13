@@ -1,0 +1,449 @@
+\documentclass[usenames,dvipsnames]{beamer}
+
+% ////////////////////////////////////////////////////////////////////////////
+% Instructions for authors
+% ////////////////////////////////////////////////////////////////////////////
+% 
+% Please scan the current document and notices how it is divided into sections
+% Only one author per slide, please! This will reduce merge conflicts
+% Create new commands in separate sections marked by your initials
+% The document width is 78 characters.
+
+% Configuration of beamer
+\usetheme{Copenhagen}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+% Basic packages
+\usepackage{graphics,graphicx,hyperref,amsmath,amssymb,amsthm,color,multirow}
+\usepackage{ragged2e,tablefootnote,bm}
+\usepackage{verbatim,listings}
+\usepackage[normalem]{ulem}
+\usepackage{hhline}
+\usepackage{amsmath,subcaption,csquotes}
+\usepackage[many]{tcolorbox}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[]{textpos}
+\usepackage{ragged2e}
+\usepackage{dirtytalk}
+\usepackage{makecell}
+\usepackage{arydshln}
+
+\renewcommand{\emph}[1]{\textbf{#1}}
+% Set the graphics path
+% \graphicspath{{./graphics/people/}{./graphics/logos/}}
+
+% ////////////////////////////////////////////////////////////////////////////
+% LaTeX shortcut commands typically defined by CCKM
+% ////////////////////////////////////////////////////////////////////////////
+
+% Theorems
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+% Finite dimensional vectorspaces
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rn}{\R^n}
+\newcommand{\Rp}{\R^p}
+\newcommand{\Rnn}{\R^{n \times n}}
+\newcommand{\Rnp}{\R^{n \times p}}
+\newcommand{\myspan}{\text{span}}
+
+% Equations
+\newcommand{\be}{\begin{equation}}
+  \newcommand{\ee}{\end{equation}}
+\newcommand{\bes}{\begin{equation*}}
+  \newcommand{\ees}{\end{equation*}}
+
+% Matrices
+\newcommand{\bbm}{\begin{bmatrix}}
+  \newcommand{\ebm}{\end{bmatrix}}
+\newcommand{\bpm}{\begin{pmatrix}}
+  \newcommand{\epm}{\end{pmatrix}}
+
+% Sets
+\newcommand{\Ran}{\text{Ran}\:}
+\newcommand{\Ker}{\text{Ker}\:}
+
+% Floating point representation
+\newcommand{\fl}{\text{fl}}
+
+% ////////////////////////////////////////////////////////////////////////////
+% Specialized graphics
+% /////////////////////////////////////////////////////////////////////////// 
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\setbeamerfont{block title}{size=\small}
+
+\title[Introduction to HPC2N]{Introduction to HPC2N}
+%\subtitle{}
+%\author{Birgitte Bryds\o, Mirko Myllykoski, and Pedro Ojeda-May}
+%\author{Birgitte Bryds\o, Pedro Ojeda-May}
+\institute{HPC2N, Ume\aa{} University}
+
+\titlegraphic{\center{\includegraphics[height=1.2cm]{figures/naiss.png}\hspace*{1.1cm}~
+   \includegraphics[height=1.2cm]{figures/umu-logotyp-EN.png}\hspace*{1.1cm}~\includegraphics[height=1.2cm]{figures/hpc2n.png}
+}}
+%\date{21 September 2023}
+\begin{document}
+
+\frame{
+  \maketitle
+}
+
+\frame{
+\frametitle{HPC2N (HPC2N at a glance)}
+\begin{itemize}
+ \item \emph{High Performance Computing Center North (HPC2N)} is a competence center for Scientific and Parallel Computing
+\end{itemize}
+\begin{center}
+ \includegraphics[width=0.4\textwidth]{figures/hpc2n-logo-text5.png}
+\end{center}
+\begin{itemize}
+ \pause \item A part of \emph{National Academic Infrastructure for Super­computing in Sweden (NAISS)}
+\end{itemize}
+\begin{center}
+ \includegraphics[height=15mm]{figures/naiss.png}
+\end{center}
+}
+
+\frame{
+\frametitle{HPC2N (HPC2N at a glance)}
+
+Provides state-of-the-art resources and expertise:
+\begin{itemize}
+ \item Scalable and parallel \emph{HPC}
+ \pause \item Large-scale \emph{storage facilities} (Project storage (Lustre), SweStore, Tape)
+ \pause \item \emph{Grid and cloud} computing (WLCG NT1, Swedish Science Cloud)
+\pause \item National Data Science Node in ”Epidemiology and
+Biology of Infections” (DDLS)
+ \pause \item Software for e-Science applications
+ \pause \item All levels of user support
+ \begin{itemize}
+  \item Primary, advanced, dedicated
+  \item Application Experts (AEs)
+ \end{itemize}
+\end{itemize}
+}
+
+\frame{
+  \frametitle{HPC2N}
+
+  \textbf{Primary objective:} to raise the national and local level of HPC competence and transfer HPC knowledge and technology to new users in academia and industry.
+  }
+
+  
+\frame{
+\frametitle{HPC2N (partners)}
+\emph{HPC2N is hosted by} \\
+\begin{center}\includegraphics[height=16mm]{figures/umu-logotyp-EN.png}\hspace{12mm} \\
+  \end{center}
+\emph{Partners}: \\
+\begin{center}
+  \includegraphics[height=1cm]{figures/irf.png}\hspace*{1.2cm}~
+  \includegraphics[height=1cm]{figures/ltu.preview.png}\hspace*{1.2cm}~\includegraphics[height=1cm]{figures/mid_sweden_university.png}\hspace*{1.2cm}~\includegraphics[height=1cm]{figures/slu_new.png}
+    \end{center}
+}
+
+\frame{
+\frametitle{HPC2N (funding and collaborations)}
+\begin{itemize}
+	\item Funded mainly by \emph{Umeå University}, with contributions from the \emph{other HPC2N partners} \\
+% \begin{center}
+%  \vspace{5mm}
+%  \includegraphics[height=18mm]{figures/umu-logotyp-EN.png}\hspace{10mm}
+%  \includegraphics[height=10mm]{figures/SNIC_logo_lower.png}
+%  \vspace{5mm}
+% \end{center}
+ \pause \item Involved in several \emph{projects and collaborations} \\
+% \begin{itemize}
+%  \item DDLS, EGI, EISCAT, eSSENCE, NOSEG, Swedish Science Cloud, \dots
+ % \end{itemize}
+ \begin{center}
+  \includegraphics[height=1cm]{figures/essence.png}\hspace*{0.8cm}~
+  \includegraphics[height=1cm]{figures/prace.png}\hspace*{0.8cm}~\includegraphics[height=1cm]{figures/algoryx.png}\\ \vspace{0.8cm} \includegraphics[height=1cm]{figures/WLCG-logo.png}\hspace*{0.8cm}~\includegraphics[height=1cm]{figures/eosc-nordic.png}\hspace*{0.8cm}~\includegraphics[height=1cm]{figures/eiscat-logo5.png}\\ \vspace{0.8cm} \includegraphics[height=1cm]{figures/ScilifeLab.png}\hspace*{0.8cm}~\includegraphics[height=1cm]{figures/skills4eosc.png}
+    \end{center}
+\end{itemize}
+}
+
+\frame{
+\frametitle{HPC2N (training and other services)}
+\begin{itemize}
+ \item \emph{User support} (primary, advanced, dedicated)
+ \begin{itemize}
+  \item Research group meetings @ UmU
+  \item Also at the partner sites
+ \end{itemize}
+ \pause \item \emph{User training and education program}
+ \begin{itemize}
+  \item 0.5 -- 3 days; ready-to-run exercises
+  \item Introduction to HPC2N and Kebnekaise
+  \item Parallel programming and tools (OpenMP, MPI, debugging, perf. analyzers, Matlab, R, MD simulation, ML, GPU, \dots)
+    \begin{itemize}
+      \item \textbf{Using Python in an HPC environment}, 1 December 2023
+  \item \textbf{Introduction to Git}, 13-17 November 2023
+  \item \textbf{Introduction to running R, Python, and Julia in HPC}, 17-19 October 2023
+  \item \textbf{Workshop: Matlab in HPC}, 11, 18, 25/26 September 2023
+  \item \textbf{Introduction to Kebnekaise}, 21 September 2023
+\end{itemize}
+ \end{itemize}
+% \pause \item NGSSC / SeSE \& university courses
+ \pause \item Workshops and seminars 
+% \item<8-> Research \& Development --- Technology transfer
+\end{itemize}
+}
+
+\frame{
+\frametitle{HPC2N (personnel)}
+\footnotesize
+\begin{minipage}{0.48\textwidth}
+\emph{Management}
+\begin{itemize}
+ \item Paolo Bientinesi, director
+ \item Bj{\"o}rn Torkelsson, deputy director
+ \item Lena Hellman, administrator
+\end{itemize}
+\pause \emph{Application experts}
+\begin{itemize}
+ \item Jerry Eriksson
+% \item Mirko Myllykoski
+ \item Pedro Ojeda May
+\end{itemize}
+\pause \emph{Others}
+\begin{itemize}
+% \item Bo K\r{a}gstr{\"o}m
+ \item Mikael R{\"a}nnar (WLCG coord)
+% \item Anders Backman
+% \item Kenneth Bodin
+% \item Claude Lacoursi\`{e}re (Algoryx)
+ \item Research Engineers under DDLS, HPC2N/SciLifeLab
+	 \begin{itemize}
+		 \item System Developer, IT
+		 \item Data Engineer
+		 \item Data Steward 
+	 \end{itemize}
+\end{itemize}
+\end{minipage}
+\,
+\begin{minipage}{0.48\textwidth}
+\pause \emph{System and support}
+\begin{itemize}
+ \item Erik Andersson
+ \item \emph{Birgitte Bryds{\"o}}
+ \item Niklas Edmundsson (Tape coord)
+ \item Ingemar F{\"a}llman
+ \item Magnus Jonsson 
+ \item Roger Oscarsson
+ \item \emph{\r{A}ke Sandgren}
+ \item Mattias Wadenstein (NeIC, Tier1)
+ \item \emph{Lars Viklund}
+\end{itemize}
+\end{minipage}
+}
+
+\frame{
+\frametitle{HPC2N (application experts)}
+\begin{itemize}
+ \item HPC2N provides advanced and dedicated support in the form of \emph{Application Experts (AEs)}:
+\end{itemize}
+\begin{tabular}{rp{7.3cm}}
+ \pause \color{cyan} Jerry Eriksson & Profiling, Machine learning (DNN), MPI, OpenMP, OpenACC \\
+% \pause \color{cyan} Mirko Myllykoski & General HPC, numerical linear algebra, GPUs (CUDA, OpenCL, ...), task-based parallelism \\
+ \pause \color{cyan} Pedro Ojeda May & Molecular dynamics, Profiling, QM/MM, NAMD, Amber, Gromacs, GAUSSIAN, R \\
+ \pause \color{cyan} \r{A}ke Sandgren & General high level programming assistance, VASP, Gromacs, Amber \\
+\end{tabular}
+\begin{itemize}
+ \pause \item Contact through regular support 
+ \begin{itemize}
+  \item If you have a specific problem/question and/or need consultation 
+ \end{itemize}
+\end{itemize}
+}
+
+\frame{
+\frametitle{HPC2N (users by discipline)}
+\begin{itemize}
+ \item Users from several scientific disciplines:
+ \begin{itemize}
+  \item Biosciences and medicine 
+  \item Chemistry
+  \item Computing science  
+  \item Engineering 
+  \item Materials science
+  \item Mathematics and statistics 
+  \item Physics including space physics
+  \item Deep learning and artificial intelligence
+ \end{itemize}
+\end{itemize}
+}
+
+\frame{
+\frametitle{HPC2N (users by discipline, largest users)}
+\begin{itemize}
+ \item Users from several scientific disciplines:
+ \begin{itemize}
+  \item Biosciences and medicine 
+  \item \emph{Chemistry}
+  \item Computing science  
+  \item Engineering 
+  \item \emph{Materials science}
+  \item Mathematics and statistics 
+  \item \emph{Physics including space physics}
+  \item {\color{cyan} Machine learning and artificial intelligence} (several new projects)
+ \end{itemize}
+\end{itemize}
+}
+
+%% \frame{
+%% \frametitle{HPC2N (medium users by university)}
+%% \begin{center}
+%% \includegraphics[width=0.9\textwidth]{figures/medium-users.png}
+%% Projects with allocations at HPC2N: 2014-01-01 to 2016-05-30
+%% \end{center}
+%% }
+
+%% \frame{
+%% \frametitle{HPC2N (large users by university)}
+%% \begin{center}
+%% \includegraphics[width=0.9\textwidth]{figures/large-users.png}
+%% Projects with allocations at HPC2N: 2014-01-01 to 2016-05-30
+%% \end{center}
+%% }
+
+\frame{
+\frametitle{HPC2N (users by software)}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{figures/software_v2.png}
+\end{center}
+}
+
+\frame{
+\frametitle{Kebnekaise}
+\begin{itemize}
+ \item \emph{The current supercomputer at HPC2N}
+ \pause \item Named after a massif (contains some of Sweden's highest mountain peaks)
+ \pause \item Kebnekaise was 
+ \begin{itemize}
+  \item delivered by Lenovo and 
+  \item \emph{installed during the summer 2016}
+ \end{itemize}
+ \pause \item Opened up for general availability on November 7, 2016
+ \pause \item In 2018, Kebnekaise was \emph{extended} with 
+ \begin{itemize}
+  \item 52 Intel Xeon Gold 6132 (Skylake) nodes, as well as 
+  \item 10 NVidian V100 (Volta) GPU nodes
+ \end{itemize}
+ \pause \item In 2023, Kebnekaise was \emph{extended} with 
+ \begin{itemize}
+ \item 2 dual NVIDIA A100 GPU nodes
+ \item one many-core AMD Zen3 CPU node
+ \end{itemize}
+\end{itemize}
+}
+
+\frame{
+\frametitle{Kebnekaise (compute nodes)}
+\begin{tabular}{rcp{6.0cm}}
+ Name & \# & Description \\ \hline 
+         \color{cyan} Compute-AMD Zen3 & 1 & \makecell[l]{AMD Zen3 (EPYC 7762), 2 x 64 cores, \\\emph{1 TB}, EDR Infiniband} \\ \hdashline
+	\pause \color{cyan} Compute-skylake & \emph{52} & \makecell[l]{Intel Xeon Gold 6132, 2 x 14 cores, \\\emph{192 GB}, EDR Infiniband, \emph{AVX-512}} \\ \hdashline
+        \pause \makecell[r]{\color{cyan} Compute \\ \small{\color{red} !!! Being phased out !!!}} & \emph{432} & \makecell[l]{Intel Xeon E5-2690v4, \emph{2 x 14 cores}, \\\emph{128 GB}, FDR Infiniband} \\ \hdashline
+        \pause \color{cyan} Large Memory & 20 & \makecell[l]{Intel Xeon E7-8860v4, \emph{4 x 18 cores}, \\\emph{3072 GB}, EDR Infiniband} \\ \hdashline
+% \pause \color{cyan} KNL & 36 & \makecell[l]{Intel \emph{Xeon Phi} 7250 (Knight's Landing), \\ 68 cores, 192 GB, 16 GB MCDRAM, \\FDR Infiniband}
+\end{tabular}
+}
+
+ \frame{
+ \frametitle{Kebnekaise (GPU nodes)}
+ \begin{footnotesize}
+ \begin{tabular}{rcp{7.0cm}}
+ Name & \# & Description \\ \hline
+ 	\color{cyan} 2 x A100 & 2 & \makecell[l]{AMD Zen3 (AMD EPYC 7413), 2 x 24 cores, \\ 512 GB, EDR Infiniband, \\\emph{2 x NVidia A100}, \\2 x 6912 CUDA cores, \\ \emph{2 x 432 Tensor cores}} \\ \hdashline
+        \pause \color{cyan} GPU-volta & 10 & \makecell[l]{Intel Xeon Gold 6132, 2 x 14 cores,\\ 192 GB, EDR Infiniband, \\\emph{2 x NVidia V100}, \\2 x 5120 CUDA cores, 2 x 16 GB VRAM, \\\emph{2 x 640 Tensor cores}} \\ \hdashline 
+  \pause \makecell{\color{cyan} 4xGPU \\ \small{\color{red} !!! Being phased out !!!}} & 4 & \makecell[l]{Intel Xeon E5-2690v4, 2 x 14 cores,\\ 128 GB, FDR Infiniband,\\ \emph{4 x NVidia K80} \\ 8 x 2496 CUDA cores, 8 x 12 GB VRAM} \\ \hdashline
+  \pause \makecell{\color{cyan} 2xGPU \\ \small{\color{red} !!! Being phased out !!!}} & 32 & \makecell[l]{Intel Xeon E5-2690v4, 2 x 14 cores,\\ 128 GB, FDR Infiniband,\\ \emph{2 x NVidia K80} \\ 4 x 2496 CUDA cores, 4 x 12 GB VRAM} \\ 
+ \end{tabular}
+ \end{footnotesize}
+ }
+
+\frame{
+\frametitle{Kebnekaise (in numbers)}
+\begin{itemize}
+\item 553 nodes in 15 racks
+  \pause \item Intel Broadwell and Skylake, AMD Zen3
+  \pause \item NVidia A100, V100, K80 GPUs
+% \begin{itemize}
+%  \item 18840 available for users (the rest are for managing the cluster)
+% \end{itemize}
+ \pause \item More than \emph{135 TB memory}
+ \pause \item 71 switches (Infiniband, Access and Management networks)
+  \pause \item 16504 CPU cores
+% \pause \item 728 TFlops/s Peak performance (expansion not included)
+% \pause \item \emph{629 TFlops/s} Linpack (all parts, except expansion)
+\pause \item 501760 CUDA cores
+\pause \item 12800 Tensor cores
+\end{itemize}
+}
+
+\frame{
+\frametitle{Kebnekaise (HPC2N storage)}
+\begin{itemize}
+ \item Basically four types of storage are available at HPC2N:
+ \begin{itemize}
+  \pause \item {\color{cyan} Home directory}
+  \begin{itemize}
+   \item \texttt{/home/X/Xyz}, \texttt{\$HOME}, \texttt{$\sim$}
+   \item 25 GB, user owned
+  \end{itemize}
+  \pause \item {\color{cyan} Project storage}
+  \begin{itemize}
+   \item \texttt{/proj/nobackup/abc}
+   \item Shared among project members
+  \end{itemize}
+  \pause \item {\color{cyan} Local scratch space}
+  \begin{itemize}
+   \item \texttt{\$SNIC\_TMP}
+   \item SSD (170GB), per job, per node, "volatile"
+  \end{itemize}
+  \pause \item {\color{cyan} Tape Storage}
+  \begin{itemize}
+   \item Backup
+   \item \emph{Long term storage}
+  \end{itemize}
+ \end{itemize}
+  \pause \item Also {\color{cyan} SweStore} --- disk based (dCache)
+  \begin{itemize}
+   \item Research Data Storage Infrastructure, for active research data and operated by NAISS, WLCG
+  \end{itemize}
+\end{itemize}
+}
+
+\frame{
+\frametitle{Kebnekaise (projects)}
+\begin{itemize}
+ \item In order to use Kebnekaise, you must be a member of a \emph{compute project}
+ \begin{itemize}
+  \pause \item A compute project has a certain number of \emph{core hours} allocated for it per month
+  \pause \item A regular CPU core cost 1 core hour per hour, other resources (e.g., GPUs) cost more
+  \pause \item Not a hard limit but projects that go over the allocation get lower priority
+ \end{itemize}
+ \pause \item A compute project contains a certain amount of storage
+ \begin{itemize}
+  \item If more storage is required, you must be a member of a \emph{storage project}
+ \end{itemize}
+ \pause \item As Kebnekaise is a local cluster, you need to be affiliated with UmU, IRF, SLU, Miun, or LTU to use it
+ \pause \item Projects are applied for through SUPR (https://supr.naiss.se) 
+ % \pause \item Birgitte will cover more details
+ %\pause \item I will cover more details in the next section, where we go more into detail about HPC2N and Kebnekaise. 
+\end{itemize}
+}
+
+\end{document}
+
+
+
+
+
+
